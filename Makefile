@@ -27,7 +27,8 @@ compile-tests: clean-eunit
 	mkdir -p $(TEST_OUT_DIR)
 	ERL_LIBS=$(ERL_LIBS) $(LFEC) -o $(TEST_OUT_DIR) $(TEST_DIR)/*_tests.lfe
 
-shell:
+shell: compile
+	clear
 	ERL_LIBS=$(ERL_LIBS) $(LFE) -pa $(TEST_OUT_DIR)
 
 clean: clean-ebin clean-eunit
