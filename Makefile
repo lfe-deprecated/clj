@@ -37,3 +37,9 @@ clean: clean-ebin clean-eunit
 check: compile compile-tests
 	@clear;
 	@rebar eunit verbose=1 skip_deps=true
+
+push-all:
+	git push --all
+	git push upstream --all
+	git push --tags
+	git push upstream --tags
