@@ -45,7 +45,7 @@ $(EXPM): $(BIN_DIR)
 
 get-deps: $(EXPM)
 	rebar get-deps
-	for DIR in $(wildcard $(DEPS)/*); do 	cd $$DIR; git pull; cd - ; done
+	for DIR in $(wildcard $(DEPS)/*); do cd $$DIR; git pull; cd - ; done
 
 clean-ebin:
 	rm -f $(OUT_DIR)/*.beam
