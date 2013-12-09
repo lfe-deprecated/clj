@@ -99,5 +99,5 @@ push-all:
 	git push --tags
 	git push upstream --tags
 
-uplload:
+upload:
 	$(EXPM) publish
