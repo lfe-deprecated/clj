@@ -71,7 +71,7 @@ clean: clean-ebin clean-eunit
 	rebar clean
 
 check: compile compile-tests
-	@clear;
+	@clear
 	@rebar eunit verbose=1 skip_deps=true
 
 check-only: compile-only compile-tests
