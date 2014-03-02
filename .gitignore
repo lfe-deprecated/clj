@@ -3,3 +3,6 @@ deps
 *.sublime-workspace
 *.beam
 .eunit
+bin/expm
+ebin/*.app
+ebin/*.beam
