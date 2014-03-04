@@ -105,5 +105,11 @@ push-all:
 	git push --tags
 	git push upstream --tags
 
-upload:
+upload: $(EXPM) get-version
+	@echo "Package file:"
+	@echo
+	@cat package.exs
+	@echo
+	@echo "Continue with upload? "
+	@read
 	$(EXPM) publish
