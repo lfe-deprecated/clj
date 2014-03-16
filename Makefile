@@ -8,7 +8,7 @@ LFE_EBIN = $(LFE_DIR)/ebin
 LFE = $(LFE_DIR)/bin/lfe
 LFEC = $(LFE_DIR)/bin/lfec
 LFEUNIT_DIR = $(DEPS)/lfeunit
-ERL_LIBS = $(LFE_DIR):$(EREDIS_DIR):$(LFEUNIT_DIR):./
+ERL_LIBS = $(shell find deps -depth 1 -exec echo -n '{}:' \;|sed 's/:$$/:./')
 SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
@@ -83,6 +83,16 @@ check: compile compile-tests
 check-only: compile-only compile-tests
 	@clear;
 	@rebar eunit verbose=1 skip_deps=true
+
+check-travis: compile compile-tests
+	@echo "Building and running unit tests ..."
+	@ERL_LIBS=$(ERL_LIBS) erl -pa .eunit -noshell \
+	-eval "eunit:test({inparallel,[\
+		`ls .eunit| \
+		sed -e 's/.beam//'| \
+		awk '{print "\x27" $$1 "\x27"}'| \
+		sed ':a;N;$$!ba;s/\n/,/g'`]},[verbose])" \
+	-s init stop
 
 # Note that this make target expects to be used like so:
 #	$ ERL_LIB=some/path make install
