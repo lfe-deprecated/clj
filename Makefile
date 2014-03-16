@@ -8,12 +8,12 @@ LFE_EBIN = $(LFE_DIR)/ebin
 LFE = $(LFE_DIR)/bin/lfe
 LFEC = $(LFE_DIR)/bin/lfec
 LFEUNIT_DIR = $(DEPS)/lfeunit
-ERL_LIBS = $(shell find deps -depth 1 -exec echo -n '{}:' \;|sed 's/:$$/:./')
 SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
 FINISH=-run init stop -noshell
+ERL_LIBS = $(shell find deps -depth 1 -exec echo -n '{}:' \;|sed 's/:$$/:./'):$(TEST_OUT_DIR)
 
 get-version:
 	@echo
@@ -45,38 +45,44 @@ $(EXPM): $(BIN_DIR)
 	curl -o $(EXPM) http://expm.co/__download__/expm
 	chmod +x $(EXPM)
 
-get-deps: $(EXPM)
-	rebar get-deps
-	for DIR in $(wildcard $(DEPS)/*); do cd $$DIR; git pull; cd - ; done
+get-deps:
+	@echo "Getting dependencies ..."
+	@rebar get-deps
+	@for DIR in $(wildcard $(DEPS)/*); do \
+	cd $$DIR; git pull; cd - ; done
 
 clean-ebin:
-	rm -f $(OUT_DIR)/*.beam
+	@-rm -f $(OUT_DIR)/*.beam
 
 clean-eunit:
-	rm -rf $(TEST_OUT_DIR)
+	@echo "Cleaning eunit dir ..."
+	@rm -rf $(TEST_OUT_DIR)
 
 compile: get-deps clean-ebin
-	rebar compile
+	@echo "Compiling dependencies and project ..."
+	@rebar compile
 
 compile-only: clean-ebin
-	rebar compile skip_deps=true
+	@rebar compile skip_deps=true
 
 compile-tests: clean-eunit
-	mkdir -p $(TEST_OUT_DIR)
-	ERL_LIBS=$(ERL_LIBS) $(LFEC) -o $(TEST_OUT_DIR) $(TEST_DIR)/*_tests.lfe
+	@echo "Compiling unit test code ..."
+	@mkdir -p $(TEST_OUT_DIR)
+	@ERL_LIBS=$(ERL_LIBS) $(LFEC) -o $(TEST_OUT_DIR) $(TEST_DIR)/*_tests.lfe
 
 shell: compile
-	clear
-	ERL_LIBS=$(ERL_LIBS) $(LFE) -pa $(TEST_OUT_DIR)
+	@clear
+	@ERL_LIBS=$(ERL_LIBS) $(LFE) -pa $(TEST_OUT_DIR)
 
 shell-only: compile-only
-	clear
-	ERL_LIBS=$(ERL_LIBS) $(LFE) -pa $(TEST_OUT_DIR)
+	@clear
+	@ERL_LIBS=$(ERL_LIBS) $(LFE) -pa $(TEST_OUT_DIR)
 
 clean: clean-ebin clean-eunit
-	rebar clean
+	@rebar clean
 
 check: compile compile-tests
+	@echo "Building and running unit tests ..."
 	@clear
 	@rebar eunit verbose=1 skip_deps=true
 
