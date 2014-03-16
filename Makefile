@@ -42,8 +42,8 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 $(EXPM): $(BIN_DIR)
-	curl -o $(EXPM) http://expm.co/__download__/expm
-	chmod +x $(EXPM)
+	@curl -o $(EXPM) http://expm.co/__download__/expm
+	@chmod +x $(EXPM)
 
 get-deps:
 	@echo "Getting dependencies ..."
@@ -52,17 +52,19 @@ get-deps:
 	cd $$DIR; git pull; cd - ; done
 
 clean-ebin:
+	@echo "Cleaning ebin dir ..."
 	@-rm -f $(OUT_DIR)/*.beam
 
 clean-eunit:
 	@echo "Cleaning eunit dir ..."
-	@rm -rf $(TEST_OUT_DIR)
+	@-rm -rf $(TEST_OUT_DIR)
 
 compile: get-deps clean-ebin
 	@echo "Compiling dependencies and project ..."
 	@rebar compile
 
 compile-only: clean-ebin
+	@echo "Compiling project code ..."
 	@rebar compile skip_deps=true
 
 compile-tests: clean-eunit
@@ -82,16 +84,17 @@ clean: clean-ebin clean-eunit
 	@rebar clean
 
 check: compile compile-tests
-	@echo "Building and running unit tests ..."
+	@echo "Running unit tests ..."
 	@clear
 	@rebar eunit verbose=1 skip_deps=true
 
 check-only: compile-only compile-tests
+	@echo "Running unit tests ..."
 	@clear;
 	@rebar eunit verbose=1 skip_deps=true
 
 check-travis: compile compile-tests
-	@echo "Building and running unit tests ..."
+	@echo "Running unit tests ..."
 	@ERL_LIBS=$(ERL_LIBS) erl -pa .eunit -noshell \
 	-eval "eunit:test({inparallel,[\
 		`ls .eunit| \
