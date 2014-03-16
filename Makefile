@@ -42,6 +42,7 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 $(EXPM): $(BIN_DIR)
+	@echo "Downloading EXPM ..."
 	@curl -o $(EXPM) http://expm.co/__download__/expm
 	@chmod +x $(EXPM)
 
@@ -60,7 +61,7 @@ clean-eunit:
 	@-rm -rf $(TEST_OUT_DIR)
 
 compile: get-deps clean-ebin
-	@echo "Compiling dependencies and project ..."
+	@echo "Compiling dependencies and project code ..."
 	@rebar compile
 
 compile-only: clean-ebin
@@ -81,7 +82,7 @@ shell-only: compile-only
 	@ERL_LIBS=$(ERL_LIBS) $(LFE) -pa $(TEST_OUT_DIR)
 
 clean: clean-ebin clean-eunit
-	@rebar clean
+	@#rebar clean
 
 check: compile compile-tests
 	@echo "Running unit tests ..."
