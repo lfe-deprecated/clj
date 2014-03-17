@@ -65,7 +65,7 @@ clean-eunit:
 
 compile: get-deps clean-ebin
 	@echo "Compiling dependencies and project code ..."
-	ERL_LIBS=$(ERL_LIBS) rebar compile
+	@ERL_LIBS=$(ERL_LIBS) rebar compile
 
 compile-only: clean-ebin
 	@echo "Compiling project code ..."
