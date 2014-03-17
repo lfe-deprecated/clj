@@ -62,11 +62,11 @@ clean-eunit:
 
 compile: get-deps clean-ebin
 	@echo "Compiling dependencies and project code ..."
-	@rebar compile
+	@ERL_LIBS=$(ERL_LIBS) rebar compile
 
 compile-only: clean-ebin
 	@echo "Compiling project code ..."
-	@rebar compile skip_deps=true
+	@ERL_LIBS=$(ERL_LIBS) rebar compile skip_deps=true
 
 compile-tests: clean-eunit
 	@echo "Compiling unit test code ..."
@@ -87,12 +87,12 @@ clean: clean-ebin clean-eunit
 check: compile compile-tests
 	@echo "Running unit tests ..."
 	@clear
-	@rebar eunit verbose=1 skip_deps=true
+	@ERL_LIBS=$(ERL_LIBS) rebar eunit verbose=1 skip_deps=true
 
 check-only: compile-only compile-tests
 	@echo "Running unit tests ..."
 	@clear;
-	@rebar eunit verbose=1 skip_deps=true
+	@ERL_LIBS=$(ERL_LIBS) rebar eunit verbose=1 skip_deps=true
 
 check-travis: compile compile-tests
 	@echo "Running unit tests ..."
