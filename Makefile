@@ -73,7 +73,7 @@ compile-only: clean-ebin
 
 compile-tests: clean-eunit
 	@echo "Compiling unit test code ..."
-	man find
+	man -P cat find
 	mkdir -p $(TEST_OUT_DIR)
 	ERL_LIBS=$(ERL_LIBS) $(LFEC) -o $(TEST_OUT_DIR) $(TEST_DIR)/*tests.lfe
 
