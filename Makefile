@@ -58,11 +58,11 @@ clean-ebin:
 
 clean-eunit:
 	@echo "Cleaning eunit dir ..."
-	@-rm -rf $(TEST_OUT_DIR)
+	rm -rf $(TEST_OUT_DIR)
 
 compile: get-deps clean-ebin
 	@echo "Compiling dependencies and project code ..."
-	@ERL_LIBS=$(ERL_LIBS) rebar compile
+	ERL_LIBS=$(ERL_LIBS) rebar compile
 
 compile-only: clean-ebin
 	@echo "Compiling project code ..."
@@ -70,8 +70,8 @@ compile-only: clean-ebin
 
 compile-tests: clean-eunit
 	@echo "Compiling unit test code ..."
-	@mkdir -p $(TEST_OUT_DIR)
-	@ERL_LIBS=$(ERL_LIBS) $(LFEC) -o $(TEST_OUT_DIR) $(TEST_DIR)/*_tests.lfe
+	mkdir -p $(TEST_OUT_DIR)
+	ERL_LIBS=$(ERL_LIBS) $(LFEC) -o $(TEST_OUT_DIR) $(TEST_DIR)/*tests.lfe
 
 shell: compile
 	@clear
@@ -96,7 +96,7 @@ check-only: compile-only compile-tests
 
 check-travis: compile compile-tests
 	@echo "Running unit tests ..."
-	@ERL_LIBS=$(ERL_LIBS) erl -pa .eunit -noshell \
+	ERL_LIBS=$(ERL_LIBS) erl -pa .eunit -noshell \
 	-eval "eunit:test({inparallel,[\
 		`ls .eunit| \
 		sed -e 's/.beam//'| \
