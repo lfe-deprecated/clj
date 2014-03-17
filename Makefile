@@ -13,7 +13,7 @@ OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
 FINISH=-run init stop -noshell
-ERL_LIBS = $(shell find $(DEPS) -depth 1 -exec echo -n '{}:' \;|sed 's/:$$/:./'):$(TEST_OUT_DIR)
+ERL_LIBS = $(shell find $(DEPS) -maxdepth 1 -exec echo -n '{}:' \;|sed 's/:$$/:./'):$(TEST_OUT_DIR)
 
 get-erllibs:
 	@echo $(ERL_LIBS)
@@ -73,7 +73,6 @@ compile-only: clean-ebin
 
 compile-tests: clean-eunit
 	@echo "Compiling unit test code ..."
-	man -P cat find
 	mkdir -p $(TEST_OUT_DIR)
 	ERL_LIBS=$(ERL_LIBS) $(LFEC) -o $(TEST_OUT_DIR) $(TEST_DIR)/*tests.lfe
 
