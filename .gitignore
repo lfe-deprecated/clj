@@ -6,3 +6,4 @@ deps
 bin/expm
 ebin/*.app
 ebin/*.beam
+.rebar
