@@ -27,7 +27,7 @@ get-version:
 	-noshell -s erlang halt
 
 $(EXPM): $(BIN_DIR)
-	@PATH=$(SCRIPT_PATH) lfetool install expm
+	@#@PATH=$(SCRIPT_PATH) lfetool install expm
 
 get-deps:
 	@echo "Getting dependencies ..."
@@ -95,11 +95,11 @@ push-all:
 	git push upstream --tags
 
 install: compile
-	@echo "Installing {{PROJECT}} ..."
+	@echo "Installing $(PROJCET) ..."
 	@PATH=$(SCRIPT_PATH) lfetool install lfe
 
 upload: $(EXPM) get-version
-	@echo "Preparing to upload {{PROJECT}} ..."
+	@echo "Preparing to upload $(PROJECT) ..."
 	@echo
 	@echo "Package file:"
 	@echo
