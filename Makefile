@@ -9,6 +9,7 @@ OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
 SCRIPT_PATH=.:./bin:$(PATH)
+ERL_LIBS=$(shell $(LFETOOL) info erllibs):~/.lfetool/ebin
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
@@ -21,8 +22,8 @@ $(LFETOOL): $(BIN_DIR)
 get-version:
 	@PATH=$(SCRIPT_PATH) lfetool info version
 	@echo "Erlang/OTP, LFE, & library versions:"
-	@ERL_LIBS=$(ERL_LIBS) PATH=$(SCRIPT_PATH) erl -pa $(OUT_DIR) \
-	-eval "io:format(\"~p~n\",['lfe-utils':'get-versions'()])." \
+	@ERL_LIBS=$(ERL_LIBS) PATH=$(SCRIPT_PATH) erl \
+	-eval "lfe_io:format(\"~p~n\",['lfe-utils':'get-versions'()])." \
 	-noshell -s erlang halt
 
 $(EXPM): $(BIN_DIR)
