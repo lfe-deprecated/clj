@@ -20,6 +20,10 @@ $(LFETOOL): $(BIN_DIR)
 
 get-version:
 	@PATH=$(SCRIPT_PATH) lfetool info version
+	@echo "Erlang/OTP, LFE, & library versions:"
+	@ERL_LIBS=$(ERL_LIBS) PATH=$(SCRIPT_PATH) erl -pa $(OUT_DIR) \
+	-eval "io:format(\"~p~n\",['lfe-utils':'get-versions'()])." \
+	-noshell -s erlang halt
 
 $(EXPM): $(BIN_DIR)
 	@PATH=$(SCRIPT_PATH) lfetool install expm
