@@ -49,7 +49,8 @@
 (defun dict?
   ((data) (when (== 'dict (element 1 data)))
     'true)
-  ((_)))
+  ((_)
+    'false))
 
 (defun odd? (x)
   (== 1 (rem x 2)))
