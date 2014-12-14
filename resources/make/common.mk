@@ -2,6 +2,14 @@ ifeq ($(shell which erl),)
 $(error Can't find Erlang executable 'erl')
 exit 1
 endif
+OS := $(shell uname -s)
+ifeq ($(OS),Linux)
+HOST=$(HOSTNAME)
+endif
+ifeq ($(OS),Darwin)
+HOST = $(shell scutil --get ComputerName)
+endif
+
 PROJECT = lutil
 LIB = $(PROJECT)
 DEPS = ./deps
@@ -17,15 +25,7 @@ LFETOOL=$(BIN_DIR)/lfetool
 else
 LFETOOL=lfetool
 endif
-ERL_LIBS = .:..:../lutil:$(shell $(LFETOOL) info erllibs)
-OS := $(shell uname -s)
-ifeq ($(OS),Linux)
-        HOST=$(HOSTNAME)
-endif
-ifeq ($(OS),Darwin)
-        HOST = $(shell scutil --get ComputerName)
-endif
-
+ERL_LIBS = ..:../$(PROJECT):$(shell $(LFETOOL) info erllibs)
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
