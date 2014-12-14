@@ -1,3 +1,12 @@
+(defmacro in? (item collection)
+  `(orelse ,@(lists:map
+               (lambda (x)
+                 `(== ,x ,item))
+               collection)))
+
+(defmacro not-in? (item collection)
+  `(not (in? ,item ,collection)))
+
 (defun string? (data)
   (io_lib:printable_list data))
 
