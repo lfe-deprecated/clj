@@ -31,7 +31,16 @@
 (defun function? (data arity)
   (is_function data arity))
 
+(defun func? (data)
+  (is_function data))
+
+(defun func? (data arity)
+  (is_function data arity))
+
 (defun integer? (data)
+  (is_integer data))
+
+(defun int? (data)
   (is_integer data))
 
 (defun number? (data)
@@ -52,6 +61,22 @@
   ((_)
     'false))
 
+(defun undefined? (x)
+  (== x 'undefined))
+
+(defun undef? (x)
+  (== x 'undefined))
+
+(defun nil? (x)
+  (or (== x 'nil)
+      (== x '())))
+
+(defun true? (x)
+  (== x 'true))
+
+(defun false? (x)
+  (== x 'false))
+
 (defun odd? (x)
   (== 1 (rem x 2)))
 
@@ -60,4 +85,10 @@
 
 (defun zero? (x)
   (== 0 x))
+
+(defun pos? (x)
+  (> x 0))
+
+(defun neg? (x)
+  (< x 0))
 
