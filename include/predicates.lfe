@@ -1,7 +1,7 @@
 (defmacro in? (item collection)
   `(orelse ,@(lists:map
                (lambda (x)
-                 `(== ,x ,item))
+                 `(=:= ,x ,item))
                collection)))
 
 (defmacro not-in? (item collection)
@@ -64,36 +64,40 @@
 (defun reference? (data)
   (is_reference data))
 
+(defun set? (x)
+  (or (sets:is_set x)
+      (ordsets:is_set x)))
+
 (defun dict?
-  ((data) (when (== 'dict (element 1 data)))
+  ((data) (when (=:= 'dict (element 1 data)))
     'true)
   ((_)
     'false))
 
 (defun undefined? (x)
-  (== x 'undefined))
+  (=:= x 'undefined))
 
 (defun undef? (x)
-  (== x 'undefined))
+  (=:= x 'undefined))
 
 (defun nil? (x)
-  (or (== x 'nil)
-      (== x '())))
+  (or (=:= x 'nil)
+      (=:= x '())))
 
 (defun true? (x)
-  (== x 'true))
+  (=:= x 'true))
 
 (defun false? (x)
-  (== x 'false))
+  (=:= x 'false))
 
 (defun odd? (x)
-  (== 1 (rem x 2)))
+  (=:= 1 (rem x 2)))
 
 (defun even? (x)
-  (== 0 (rem x 2)))
+  (=:= 0 (rem x 2)))
 
 (defun zero? (x)
-  (== 0 x))
+  (=:= 0 x))
 
 (defun pos? (x)
   (> x 0))
@@ -101,3 +105,31 @@
 (defun neg? (x)
   (< x 0))
 
+(defun identical? (x y)
+  (=:= x y))
+
+(defun empty? (x)
+  (=:= x '()))
+
+(defun every? (pred x)
+  (lists:all pred x))
+
+(defun all? (pred x)
+  (lists:all pred x))
+
+(defun any? (pred x)
+  (lists:any pred x))
+
+(defun not-any? (pred x)
+  (not (lists:any pred x)))
+
+(defun element?
+  ((element x) (when (is_list x))
+    (any? (lambda (y) (identical? element y)) x))
+  ((element x)
+    (cond
+      ((sets:is_set x)
+        (sets:is_element element x))
+      ((ordsets:is_set x)
+        (ordsets:is_element element x))
+      ('true 'false))))
