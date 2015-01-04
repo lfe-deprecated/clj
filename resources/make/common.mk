@@ -10,7 +10,6 @@ ifeq ($(OS),Darwin)
 HOST = $(shell scutil --get ComputerName)
 endif
 
-PROJECT = lutil
 LIB = $(PROJECT)
 DEPS = ./deps
 BIN_DIR = ./bin
