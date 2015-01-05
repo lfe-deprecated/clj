@@ -61,7 +61,7 @@ $(EXPM): $(BIN_DIR)
 
 get-deps:
 	@echo "Getting dependencies ..."
-	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) download deps
+	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd get-deps || rebar get-deps
 
 clean-ebin:
 	@echo "Cleaning ebin dir ..."
