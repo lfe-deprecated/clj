@@ -74,6 +74,22 @@
   ((_)
     'false))
 
+(defun proplist?
+  ((data) (when (is_list data))
+    (if (lists:all #'proplist-kv?/1 data)
+      'true
+      'false))
+  ((_)
+    'false))
+
+(defun proplist-kv?
+  ((`#(,key ,_)) (when (is_atom key))
+    'true)
+  ((bool-key) (when (is_atom bool-key))
+    'true)
+  ((_)
+    'false))
+
 (defun undefined? (x)
   (=:= x 'undefined))
 
