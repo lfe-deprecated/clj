@@ -64,6 +64,9 @@
 (defun reference? (data)
   (is_reference data))
 
+(defun map? (data)
+  (is_map data))
+
 (defun set? (x)
   (or (sets:is_set x)
       (ordsets:is_set x)))
