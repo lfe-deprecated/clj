@@ -65,7 +65,9 @@
   (is_reference data))
 
 (defun map? (data)
-  (is_map data))
+  (if (erl_internal:bif 'is_map 1)
+      (call 'erlang 'is_map data)
+      'false))
 
 (defun set? (x)
   (or (sets:is_set x)
