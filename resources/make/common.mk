@@ -13,7 +13,6 @@ endif
 LIB = $(PROJECT)
 DEPS = ./deps
 BIN_DIR = ./bin
-EXPM = $(BIN_DIR)/expm
 SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
@@ -54,10 +53,6 @@ get-codepath:
 	erl -eval "io:format(\"~p~n\", [code:get_path()])." -noshell -s erlang halt
 
 debug: get-erllibs get-codepath
-
-$(EXPM): $(BIN_DIR)
-	@[ -f $(EXPM) ] || \
-	PATH=$(SCRIPT_PATH) lfetool install expm $(BIN_DIR)
 
 get-deps:
 	@echo "Getting dependencies ..."
@@ -142,14 +137,3 @@ push-all:
 install: compile
 	@echo "Installing lutil ..."
 	@PATH=$(SCRIPT_PATH) lfetool install lfe
-
-upload: $(EXPM) get-version
-	@echo "Preparing to upload lutil ..."
-	@echo
-	@echo "Package file:"
-	@echo
-	@cat package.exs
-	@echo
-	@echo "Continue with upload? "
-	@read
-	$(EXPM) publish
