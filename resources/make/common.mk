@@ -23,7 +23,7 @@ LFETOOL=$(BIN_DIR)/lfetool
 else
 LFETOOL=lfetool
 endif
-ERL_LIBS = ..:../$(PROJECT):$(shell $(LFETOOL) info erllibs)
+ERL_LIBS=/$(shell pwd):$(shell $(LFETOOL) info erllibs)
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
