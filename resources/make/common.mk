@@ -66,7 +66,11 @@ clean-ebin:
 clean-eunit:
 	-@PATH=$(SCRIPT_PATH) $(LFETOOL) tests clean
 
-compile-tests: clean-eunit
+deps/ltest:
+	git clone https://github.com/lfex/ltest.git deps/ltest
+	cd deps/ltest && make compile
+
+compile-tests: clean-eunit deps/ltest
 	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) tests build
 
 repl: compile
