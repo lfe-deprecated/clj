@@ -71,9 +71,10 @@ clean-eunit:
 
 deps/ltest:
 	git clone https://github.com/lfex/ltest.git deps/ltest
-	ln -s ../../bin .
-	ln -a ../../deps .
-	cd deps/ltest && make compile
+	cd deps/ltest && \
+	ln -s ../../bin . && \
+	ln -a ../../deps . && \
+	make compile
 
 compile-tests: clean-eunit deps/ltest
 	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) tests build
