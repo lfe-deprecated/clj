@@ -28,9 +28,10 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 get-lfetool: $(BIN_DIR)
-	curl -L -o ./lfetool https://raw.githubusercontent.com/lfe/lfetool/stable/lfetool && \
+	curl -L -o ./lfetool https://raw.githubusercontent.com/lfe/lfetool/dev-v1/lfetool && \
 	chmod 755 ./lfetool && \
 	mv ./lfetool $(BIN_DIR)
+	$(LFETOOL) -x
 
 copy-appsrc:
 	@mkdir -p $(OUT_DIR)
@@ -129,7 +130,7 @@ check-all: get-deps compile-no-deps clean-eunit
 
 check: check-unit-with-deps
 
-check-travis: compile compile-tests check-unit-only
+check-travis: get-lfetool compile compile-tests check-unit-only
 
 push-all:
 	@echo "Pusing code to github ..."
