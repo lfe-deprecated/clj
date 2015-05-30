@@ -12,7 +12,7 @@ endif
 
 LIB = $(PROJECT)
 DEPS = ./deps
-BIN_DIR = ./bin
+BIN_DIR = $(shell pwd)/bin
 SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
