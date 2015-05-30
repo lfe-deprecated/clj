@@ -33,7 +33,6 @@ get-lfetool: $(BIN_DIR)
 	chmod 755 ./lfetool && \
 	mv ./lfetool $(BIN_DIR)
 	$(LFETOOL) -x
-	which lfetool
 
 copy-appsrc:
 	@mkdir -p $(OUT_DIR)
@@ -136,7 +135,7 @@ check: check-unit-with-deps
 prep-travis:
 	mkdir -p ~/.lfe/libs
 
-check-travis: prep-travis get-lfetool compile compile-tests check-unit-only
+check-travis: prep-travis compile compile-tests check-unit-only
 
 push-all:
 	@echo "Pusing code to github ..."
