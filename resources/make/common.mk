@@ -17,13 +17,14 @@ SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
-SCRIPT_PATH=$(DEPS)/lfe/bin:.:./bin:"$(PATH)":/usr/local/bin
+SCRIPT_PATH = $(shell pwd):$(DEPS)/lfe/bin:$(BIN_DIR):$(PATH):/usr/local/bin
+
 ifeq ($(shell which lfetool),)
 LFETOOL=$(BIN_DIR)/lfetool
 else
 LFETOOL=lfetool
 endif
-ERL_LIBS=/$(shell pwd):$(shell $(LFETOOL) info erllibs)
+ERL_LIBS = $(shell pwd):$(shell $(LFETOOL) info erllibs)
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
@@ -46,18 +47,19 @@ get-version:
 
 get-erllibs:
 	@echo "ERL_LIBS from lfetool:"
-	@ERL_LIBS=$(ERL_LIBS) $(LFETOOL) info erllibs
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) info erllibs
 
 get-codepath:
 	@echo "Code path:"
-	@ERL_LIBS=$(ERL_LIBS) \
+	@PATH=$(SCRIPT_PATH) @ERL_LIBS=$(ERL_LIBS) \
 	erl -eval "io:format(\"~p~n\", [code:get_path()])." -noshell -s erlang halt
 
 debug: get-erllibs get-codepath
 
 get-deps:
 	@echo "Getting dependencies ..."
-	@lfetool download deps || \
+	@PATH=$(SCRIPT_PATH) @ERL_LIBS=$(ERL_LIBS) \
+	$(LFETOOL) download deps || \
 	(which rebar.cmd >/dev/null 2>&1 && rebar.cmd get-deps || rebar get-deps)
 
 clean-ebin:
@@ -141,4 +143,4 @@ push-all:
 
 install: compile
 	@echo "Installing lutil ..."
-	@PATH=$(SCRIPT_PATH) lfetool install lfe
+	@PATH=$(SCRIPT_PATH) $(LFETOOL) install lfe
