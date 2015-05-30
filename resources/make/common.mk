@@ -33,6 +33,7 @@ get-lfetool: $(BIN_DIR)
 	chmod 755 ./lfetool && \
 	mv ./lfetool $(BIN_DIR)
 	$(LFETOOL) -x
+	which lfetool
 
 copy-appsrc:
 	@mkdir -p $(OUT_DIR)
@@ -51,14 +52,14 @@ get-erllibs:
 
 get-codepath:
 	@echo "Code path:"
-	@PATH=$(SCRIPT_PATH) @ERL_LIBS=$(ERL_LIBS) \
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) \
 	erl -eval "io:format(\"~p~n\", [code:get_path()])." -noshell -s erlang halt
 
 debug: get-erllibs get-codepath
 
 get-deps:
 	@echo "Getting dependencies ..."
-	@PATH=$(SCRIPT_PATH) @ERL_LIBS=$(ERL_LIBS) \
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) \
 	$(LFETOOL) download deps || \
 	(which rebar.cmd >/dev/null 2>&1 && rebar.cmd get-deps || rebar get-deps)
 
@@ -132,7 +133,10 @@ check-all: get-deps compile-no-deps clean-eunit
 
 check: check-unit-with-deps
 
-check-travis: get-lfetool compile compile-tests check-unit-only
+prep-travis:
+	mkdir -p ~/.lfe/libs
+
+check-travis: prep-travis get-lfetool compile compile-tests check-unit-only
 
 push-all:
 	@echo "Pusing code to github ..."
