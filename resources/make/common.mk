@@ -73,7 +73,7 @@ deps/ltest:
 	git clone https://github.com/lfex/ltest.git deps/ltest
 	cd deps/ltest && \
 	ln -s ../../bin . && \
-	ln -a ../../deps . && \
+	ln -s ../../deps . && \
 	make compile
 
 compile-tests: clean-eunit deps/ltest
