@@ -151,6 +151,48 @@
 (defun compose (funcs)
   (lists:foldl #'compose/2 (lambda (x) x) funcs))
 
+;; Partial
+;;
+;; Usage:
+;;
+;; > (set f (partial #'+/2 1))
+;; #Fun<lfe_eval.28.86468545>
+;; > (funcall f 2)
+;; 3
+;; > (set f (partial #'+/3 1))
+;; #Fun<lfe_eval.28.86468545>
+;; > (funcall f '(2 3))
+;; 6
+;; > (set f (partial #'+/3 '(2 3)))
+;; #Fun<lfe_eval.28.86468545>
+;; > (funcall f 4)
+;; 9
+;; > (set f (partial #'+/4 '(2 3)))
+;; #Fun<lfe_eval.28.86468545>
+;; > (funcall f '(4 5))
+;; 14
+;;
+(defun partial
+  "The partial function is arity 2 where the first parameter must be a
+  function and the second parameter may either be a single item or a list of
+  items.
+
+  When funcall is called against the result of the partial call, a second
+  parameter is applied to the partial function. This parameter too may be
+  either a single item or a list of items."
+  ((func args-1) (when (is_list args-1))
+    (match-lambda
+      ((args-2) (when (is_list args-2))
+        (apply func (++ args-1 args-2)))
+      ((arg-2)
+        (apply func (++ args-1 `(,arg-2))))))
+  ((func arg-1)
+    (match-lambda
+      ((args-2) (when (is_list args-2))
+        (apply func (++ `(,arg-1) args-2)))
+      ((arg-2)
+        (funcall func arg-1 arg-2)))))
+
 (defun loaded-compose ()
   "This is just a dummy function for display purposes when including from the
   REPL (the last function loaded has its name printed in stdout).
