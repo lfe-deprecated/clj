@@ -11,9 +11,9 @@
 ;; > (set o '(#(a 1) #(b 2) #(c 3)))
 ;; (#(a 1) #(b 2) #(c 3))
 ;; > (-> o
-;;       (++ `(#(d 4)))
-;;       (++ `(#(e 5)))
-;;       (++ `(#(f 6))))
+;;       (++ '(#(d 4)))
+;;       (++ '(#(e 5)))
+;;       (++ '(#(f 6))))
 ;; (#(a 1) #(b 2) #(c 3) #(d 4) #(e 5) #(f 6))
 ;;
 ;; Note that usage of this macro with this examples results in each successive
@@ -64,10 +64,10 @@
 ;;
 ;; > (set o '(#(a 1) #(b 2) #(c 3)))
 ;; (#(a 1) #(b 2) #(c 3))
-;; > (-> o
-;;       (++ `(#(d 4)))
-;;       (++ `(#(e 5)))
-;;       (++ `(#(f 6))))
+;; > (->> o
+;;        (++ '(#(d 4)))
+;;        (++ '(#(e 5)))
+;;        (++ '(#(f 6))))
 ;; (#(f 6) #(e 5) #(d 4) #(a 1) #(b 2) #(c 3))
 ;;
 ;; Note that usage of this macro with this examples results in each successive
@@ -108,7 +108,7 @@
 ;;
 ;; Example usage:
 ;;
-;; > (include-file "include/compose-macros.lfe")
+;; > (include-file "lutil/include/compose.lfe")
 ;; compose
 ;; > (funcall (compose #'math:sin/1 #'math:asin/1)
 ;;            0.5)
