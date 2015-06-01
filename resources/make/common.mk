@@ -12,25 +12,27 @@ endif
 
 LIB = $(PROJECT)
 DEPS = ./deps
-BIN_DIR = ./bin
+BIN_DIR = $(shell pwd)/bin
 SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
-SCRIPT_PATH=$(DEPS)/lfe/bin:.:./bin:"$(PATH)":/usr/local/bin
+SCRIPT_PATH = $(shell pwd):$(DEPS)/lfe/bin:$(BIN_DIR):$(PATH):/usr/local/bin
+
 ifeq ($(shell which lfetool),)
 LFETOOL=$(BIN_DIR)/lfetool
 else
 LFETOOL=lfetool
 endif
-ERL_LIBS = ..:../$(PROJECT):$(shell $(LFETOOL) info erllibs)
+ERL_LIBS = $(shell pwd):$(shell $(LFETOOL) info erllibs)
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 get-lfetool: $(BIN_DIR)
-	curl -L -o ./lfetool https://raw.githubusercontent.com/lfe/lfetool/stable/lfetool && \
+	curl -L -o ./lfetool https://raw.githubusercontent.com/lfe/lfetool/dev-v1/lfetool && \
 	chmod 755 ./lfetool && \
 	mv ./lfetool $(BIN_DIR)
+	$(LFETOOL) -x
 
 copy-appsrc:
 	@mkdir -p $(OUT_DIR)
@@ -45,18 +47,19 @@ get-version:
 
 get-erllibs:
 	@echo "ERL_LIBS from lfetool:"
-	@ERL_LIBS=$(ERL_LIBS) $(LFETOOL) info erllibs
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) info erllibs
 
 get-codepath:
 	@echo "Code path:"
-	@ERL_LIBS=$(ERL_LIBS) \
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) \
 	erl -eval "io:format(\"~p~n\", [code:get_path()])." -noshell -s erlang halt
 
 debug: get-erllibs get-codepath
 
 get-deps:
 	@echo "Getting dependencies ..."
-	@lfetool download deps || \
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) \
+	$(LFETOOL) download deps || \
 	(which rebar.cmd >/dev/null 2>&1 && rebar.cmd get-deps || rebar get-deps)
 
 clean-ebin:
@@ -66,7 +69,14 @@ clean-ebin:
 clean-eunit:
 	-@PATH=$(SCRIPT_PATH) $(LFETOOL) tests clean
 
-compile-tests: clean-eunit
+deps/ltest:
+	git clone https://github.com/lfex/ltest.git deps/ltest
+	cd deps/ltest && \
+	ln -s ../../bin . && \
+	ln -s ../../deps . && \
+	make compile
+
+compile-tests: clean-eunit deps/ltest
 	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) tests build
 
 repl: compile
@@ -125,7 +135,10 @@ check-all: get-deps compile-no-deps clean-eunit
 
 check: check-unit-with-deps
 
-check-travis: compile compile-tests check-unit-only
+prep-travis:
+	mkdir -p ~/.lfe/libs
+
+check-travis: prep-travis compile compile-tests check-unit-only
 
 push-all:
 	@echo "Pusing code to github ..."
@@ -136,4 +149,4 @@ push-all:
 
 install: compile
 	@echo "Installing lutil ..."
-	@PATH=$(SCRIPT_PATH) lfetool install lfe
+	@PATH=$(SCRIPT_PATH) $(LFETOOL) install lfe
