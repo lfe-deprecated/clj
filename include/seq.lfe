@@ -10,8 +10,9 @@
 ;;;;
 
 (defmacro get-in args
-  (let ((data (car args))
-        (keys (cdr args)))
+  (let* ((rargs (lists:reverse args))
+         (data (car rargs))
+         (keys (lists:reverse (cdr rargs))))
     `(apply #'clj-seq:get-in/2 (list ,data (list ,@keys)))))
 
 (defun loaded-seq ()

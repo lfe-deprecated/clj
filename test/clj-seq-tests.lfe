@@ -83,11 +83,11 @@
     (1 2 (3 4 (5 6 (7 8 9))))))
 
 (deftest get-in-nth
-  (is-equal 1 (get-in (get-in-data-1) 1 1))
-  (is-equal 3 (get-in (get-in-data-1) 2 3))
-  (is-equal 9 (get-in (get-in-data-1) 3 3 3 3 3))
-  (is-equal 'undefined (get-in (get-in-data-1) 4))
-  (is-equal 'undefined (get-in (get-in-data-1) 4 3 3 3)))
+  (is-equal 1 (get-in 1 1 (get-in-data-1)))
+  (is-equal 3 (get-in 2 3 (get-in-data-1)))
+  (is-equal 9 (get-in 3 3 3 3 3 (get-in-data-1)))
+  (is-equal 'undefined (get-in 4 (get-in-data-1)))
+  (is-equal 'undefined (get-in 4 3 3 3 (get-in-data-1))))
 
 (defun get-in-data-2 ()
   '(#(key-1 val-1)
@@ -99,12 +99,12 @@
                       #(key-9 val-9)))))))
 
 (deftest get-in-keys
-  (is-equal 'val-1 (get-in (get-in-data-2) 'key-1))
-  (is-equal 'val-5 (get-in (get-in-data-2) 'key-3 'key-5))
-  (is-equal 'val-9 (get-in (get-in-data-2) 'key-3 'key-6 'key-9))
-  (is-equal 'undefined (get-in (get-in-data-2) 'key-18))
-  (is-equal 'undefined (get-in (get-in-data-2) 'key-3 'key-6 'key-89))
-  (is-equal 'undefined (get-in (get-in-data-2) 'key-3 'key-6 'key-89 'key-100)))
+  (is-equal 'val-1 (get-in 'key-1 (get-in-data-2)))
+  (is-equal 'val-5 (get-in 'key-3 'key-5 (get-in-data-2)))
+  (is-equal 'val-9 (get-in 'key-3 'key-6 'key-9 (get-in-data-2)))
+  (is-equal 'undefined (get-in 'key-18 (get-in-data-2)))
+  (is-equal 'undefined (get-in 'key-3 'key-6 'key-89 (get-in-data-2)))
+  (is-equal 'undefined (get-in 'key-3 'key-6 'key-89 'key-100(get-in-data-2))))
 
 (deftest reduce
   (is-equal 6 (clj-seq:reduce (lambda (x acc) (+ x acc)) '(1 2 3)))
