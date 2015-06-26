@@ -1,3 +1,3 @@
-PROJECT = lutil
+PROJECT = clj
 
 include resources/make/common.mk
