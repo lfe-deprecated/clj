@@ -7,11 +7,13 @@
 (defmacro not-in? (item collection)
   `(not (in? ,item ,collection)))
 
-;; XXX Once the TODO/XXX item at the top of include/seq.lfe is completed,
-;; do the same thing here with clj-p.lfe -- use kla to pull in the
-;; functions from the compose module to be available for users where --
-;; after including them -- the experience will be as if the functions were
-;; part of the language.
+;;; The following allow developers to use (include-lib ...) on this file and
+;;; pull in the functions from the passed module, making them available to
+;;; call as if they were part of the language.
+(defmacro generate-predicate-wrappers ()
+  `(progn ,@(kla:wrap-mod-funcs 'clj-p)))
+
+(generate-predicate-wrappers)
 
 (defun loaded-predicates ()
   "This is just a dummy function for display purposes when including from the

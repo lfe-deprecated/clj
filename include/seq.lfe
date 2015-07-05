@@ -1,19 +1,16 @@
-;;;; XXX Update the kla project with a macro that can:
-;;;; * introspect an LFE module
-;;;; * get a list of exported functions and their arities
-;;;; * define functions that wrap the exported functions
-;;;;
-;;;; With that macro in hand, call it in this include against the clj-seq module,
-;;;; thus allowing users/developers to include those functions in their own modules
-;;;; by means of (include-lib "clj/include/seq.lfe"), giving them a user experience
-;;;; similar to if those functions were defined as part of the language.
-;;;;
-
 (defmacro get-in args
   (let* ((rargs (lists:reverse args))
          (data (car rargs))
          (keys (lists:reverse (cdr rargs))))
     `(apply #'clj-seq:get-in/2 (list ,data (list ,@keys)))))
+
+;;; The following allow developers to use (include-lib ...) on this file and
+;;; pull in the functions from the passed module, making them available to
+;;; call as if they were part of the language.
+(defmacro generate-sequence-wrappers ()
+  `(progn ,@(kla:wrap-mod-funcs 'clj-seq)))
+
+(generate-sequence-wrappers)
 
 (defun loaded-seq ()
   "This is just a dummy function for display purposes when including from the

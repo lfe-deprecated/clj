@@ -106,10 +106,10 @@
 ;;; The following allow developers to use (include-lib ...) on this file and
 ;;; pull in the functions from the passed module, making them available to
 ;;; call as if they were part of the language.
-(defmacro generate-wrappers ()
+(defmacro generate-compose-wrappers ()
   `(progn ,@(kla:wrap-mod-funcs 'clj-comp)))
 
-(generate-wrappers)
+(generate-compose-wrappers)
 
 (defun loaded-compose ()
   "This is just a dummy function for display purposes when including from the

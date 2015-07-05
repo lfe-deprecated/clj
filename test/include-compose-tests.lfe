@@ -3,7 +3,6 @@
   (export all))
 
 (include-lib "ltest/include/ltest-macros.lfe")
-(include-lib "clj/include/predicates.lfe")
 (include-lib "clj/include/seq.lfe")
 (include-lib "clj/include/compose.lfe")
 
