@@ -28,12 +28,12 @@ way into the [lutil]() LFE library
 
 ## Dependencies [&#x219F;](#contents)
 
-As of version 0.5.0, This project assumes that you have
+As of version 0.3.0, This project assumes that you have
 [rebar3](https://github.com/rebar/rebar3) installed somwhere in your ``$PATH``.
 And no longer uses the old version of rebar.
 
 Note that if you do not wish to use rebar3, you may use the most recent
-rebar2-compatible release of lutil: 0.4.2.
+rebar2-compatible release of lutil: 0.2.1.
 
 
 ## Installation [&#x219F;](#contents)
@@ -42,11 +42,11 @@ In your ``rebar.config`` file, update your ``deps`` section to include
 ``clj``:
 
 ```erlang
-{deps, [
-  ...
-  {clj, ".*", {git, "git://github.com/lfex/clj.git"}},
-  ...
-]}
+  {deps, [
+    ...
+    {clj, ".*",
+      {git, "git@github.com:lfex/clj.git", {tag, "0.3.0"}}}
+      ]}.
 ```
 
 
