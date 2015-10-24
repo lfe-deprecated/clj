@@ -21,7 +21,7 @@ The clj library offers a collection of functions and macros that you may find us
 or enjoyable in LFE if you've come from a Clojure background.
 
 This library is in the process of extracting the Clojure functionality that made its
-way into the [lutil]() LFE library
+way into the [lutil](https://github.com/lfex/lutil#contents) LFE library
 
 
 ## Dependencies [&#x219F;](#contents)
@@ -29,7 +29,7 @@ way into the [lutil]() LFE library
 As of version 0.3.0, this project assumes that you have
 [rebar3](https://github.com/rebar/rebar3) installed somwhere in your ``$PATH``.
 It no longer uses the old version of rebar. If you do not wish to use rebar3,
-you may use the most recent rebar2-compatible release of lutil: 0.2.1.
+you may use the most recent rebar2-compatible release of clj: 0.2.1.
 
 
 ## Installation [&#x219F;](#contents)
