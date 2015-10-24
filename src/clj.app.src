@@ -2,10 +2,10 @@
 {application, clj,
  [
   %% A quick description of the application.
-  {description, "LFE Utility Functions and macros."},
+  {description, "Clojure functions and macros for LFE."},
 
   %% The version of the application
-  {vsn, "0.2.2"},
+  {vsn, "0.3.0"},
 
   %% All modules used by the application.
   {modules,
