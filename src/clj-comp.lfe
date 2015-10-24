@@ -5,7 +5,7 @@
 ;;
 ;; Usage:
 ;;
-;; > (include-file "lutil/include/compose.lfe")
+;; > (include-file "clj/include/compose.lfe")
 ;; compose
 ;; > (funcall (compose #'math:sin/1 #'math:asin/1)
 ;;            0.5)

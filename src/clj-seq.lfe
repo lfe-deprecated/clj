@@ -193,7 +193,7 @@
 ;;   (1 2 3)
 ;;   (1 2 (3 4 (5 6 (7 8 9)))))
 ;;
-;; > (include-lib "lutil/include/core.lfe")
+;; > (include-lib "clj/include/core.lfe")
 ;; loaded-core
 ;;
 ;; > (get-in data 1 1)
@@ -218,7 +218,7 @@
 ;;            #(key-6 (#(key-7 val-7)
 ;;                     #(key-8 val-8))))))
 ;;
-;; > (include-lib "lutil/include/core.lfe")
+;; > (include-lib "clj/include/core.lfe")
 ;; loaded-core
 ;; > (get-in data 'key-1)
 ;; val-1
@@ -301,12 +301,12 @@
 ;;   (lc ((<- _ (seq n))) x))
 ;;
 ;; but constructing the seq is more costly than using recursion to
-;; directly construct the list. 
+;; directly construct the list.
 (defun repeat
   ((n f) (when (is_function f) (is_integer n) (>= n 0))
     (fletrec ((repeat-fun
                  ((0 acc)
-                   acc) 
+                   acc)
                  ((n acc)
                    (repeat-fun (- n 1) (cons (funcall f) acc)))))
       (repeat-fun n '())))
