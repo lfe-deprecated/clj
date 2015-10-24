@@ -7,8 +7,6 @@
 
 *Clojure functions and macros for LFE*
 
-<img src="resources/images/clojure.png" />
-
 ##### Contents
 
 * [Introduction](#introduction-)
