@@ -69,4 +69,6 @@ Here's the branch:
 Here are the tickets you can chose from to implement your favourite Clojure bits in LFE (if you don't see the one you want, add it!):
  * https://github.com/lfex/clj/labels/Clojure%20Lib%20for%20LFE
 
+**IMPORTANT**: Even though these tickets are in the lfex/clj repo, you will be working against a branch of oubiwann/lfe! Do not submit PRs against lfex/clj -- submit them against the add-clojure-lib branch of oubiwann/lfe.
+
 Now go forth, and help these two worlds to collide :-D
