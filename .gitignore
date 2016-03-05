@@ -10,4 +10,3 @@ ebin/*.beam
 erl_crash.dump
 *.sw[po]
 _build/*
-rebar.lock
