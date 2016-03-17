@@ -1,6 +1,6 @@
 [{<<"kla">>,
   {git,"git://github.com/lfex/kla.git",
-       {ref,"bf4242125e441ce2b8b8012538c4c23e127f5825"}},
+       {ref,"a8afc4f673809d89b6c4a374b972f54ef6b39bde"}},
   0},
  {<<"lfe">>,
   {git,"git://github.com/rvirding/lfe.git",
