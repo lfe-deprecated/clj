@@ -3,7 +3,7 @@ compile:
 
 check: compile
 	-@rebar3 as test compile
-	@./priv/scripts/setup_test_env.sh
+	@PATH=.:$(PATH) ./priv/scripts/setup_test_env.sh
 	@rebar3 as test eunit
 
 repl:
