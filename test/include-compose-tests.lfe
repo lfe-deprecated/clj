@@ -35,8 +35,8 @@
                 (lists:foldl #'+/2 0))))
 
 (deftest compose
-  (is-equal 0.49999999999999994
-            (funcall (compose #'math:sin/1 #'math:asin/1) 0.5))
+  (let ((asin-result (funcall (compose #'math:sin/1 #'math:asin/1) 0.5)))
+    (is-equal "0.5" (car (io_lib:format "~.1f" `(,asin-result)))))
   (is-equal 1.5
             (funcall (compose `(,#'math:sin/1
                                    ,#'math:asin/1
@@ -44,8 +44,8 @@
   (is-equal '(1 2 3 4)
             (lists:filter (compose #'not/1 #'clj-p:zero?/1)
                           '(0 1 0 2 0 3 0 4)))
-  (is-equal 0.49999999999999994
-            (compose #'math:sin/1 #'math:asin/1 0.5)))
+  (let ((asin-result (compose #'math:sin/1 #'math:asin/1 0.5)))
+    (is-equal "0.5" (car (io_lib:format "~.1f" `(,asin-result))))))
 
 (deftest partial
   (is-equal 3 (funcall (partial #'+/2 1) 2))
