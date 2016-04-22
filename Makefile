@@ -15,7 +15,9 @@ LOCAL_DOCS_PORT = 5099
 compile:
 	rebar3 compile
 
-check:
+check: compile
+	-@rebar3 as test compile
+	@./priv/scripts/setup_test_env.sh
 	@rebar3 as test eunit
 
 repl:
