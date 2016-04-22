@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-REBAR=`PATH=.:$PATH which rebar3`
+REBAR=(readlink -f `PATH=.:$PATH which rebar3`)
 LFE_TEST_BUILD=`pwd`/_build/test
 cd ${LFE_TEST_BUILD}/lib/lutil && \
 mkdir -p _build && \
