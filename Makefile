@@ -1,7 +1,7 @@
 PROJECT = clj
 ROOT_DIR = $(shell pwd)
 REPO = $(shell git config --get remote.origin.url)
-LFE = _build/default/lib/lfe/bin/lfe
+LFE = _build/dev/lib/lfe/bin/lfe
 DOCS_DIR = $(ROOT_DIR)/docs
 GUIDE_DIR = $(DOCS_DIR)/user-guide
 GUIDE_BUILD_DIR = $(GUIDE_DIR)/build
@@ -18,8 +18,9 @@ compile:
 check:
 	@rebar3 as test eunit
 
-repl: compile
-	@$(LFE)
+repl:
+	@rebar3 as dev compile
+	@$(LFE) -pa `rebar3 as dev path -s " -pa "`
 
 shell:
 	@rebar3 shell
