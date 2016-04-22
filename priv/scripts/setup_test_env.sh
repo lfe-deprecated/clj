@@ -6,4 +6,4 @@ mkdir -p _build && \
 (test -e _build/default || \
 ln -s ${LFE_TEST_BUILD} _build/default)
 cd ${LFE_TEST_BUILD}/lib/lutil && \
-rebar3 compile || echo "Already compiled."
+PATH=.:$PATH rebar3 compile || echo "Already compiled."
