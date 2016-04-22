@@ -2,8 +2,8 @@
 
 [![][kla-logo]][kla-logo-large]
 
-[kla-logo]: resources/images/clojure.png
-[kla-logo-large]: resources/images/clojure.png
+[kla-logo]: priv/images/clojure.png
+[kla-logo-large]: priv/images/clojure.png
 
 *Clojure functions and macros for LFE*
 
