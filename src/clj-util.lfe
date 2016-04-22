@@ -2,8 +2,9 @@
   (export all))
 
 (defun get-version ()
-  (kla-util:get-app-version 'clj))
+  (lr3-ver-util:get-app-version 'clj))
 
 (defun get-versions ()
-  (++ (kla-util:get-versions)
-      `(#(clj ,(get-version)))))
+  (++ (lr3-ver-util:get-versions)
+      `(#(kla ,(lr3-ver-util:get-app-version 'kla))
+        #(clj ,(get-version)))))
