@@ -2,9 +2,9 @@ compile:
 	rebar3 compile
 
 check: compile
-	-@rebar3 as test compile
+	-@rebar3 as default+test compile
 	@./priv/scripts/setup_test_env.sh
-	@rebar3 as test eunit
+	@rebar3 as default+test eunit
 
 repl:
 	@rebar3 as dev compile
