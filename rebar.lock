@@ -1,6 +1,6 @@
 [{<<"kla">>,
-  {git,"git://github.com/lfex/kla.git",
-       {ref,"adeae5034c67a15e7090e66063d79a7b2f070db9"}},
+  {git,"https://github.com/lfex/kla.git",
+       {ref,"495cfa95682a3962ddd527c935a5afa6b808f848"}},
   0},
  {<<"lfe-version">>,
   {git,"https://github.com/lfe-rebar3/version.git",
