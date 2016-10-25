@@ -1,5 +1,7 @@
 # clj
 
+**DEPRECATED**: This library is no longer maintained! Nor is it useful, since the functionality it provides has been moved into LFE-proper (see the `clj` module).
+
 [![][kla-logo]][kla-logo-large]
 
 [kla-logo]: priv/images/clojure.png
